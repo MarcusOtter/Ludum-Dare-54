@@ -15,17 +15,29 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _animationHash = Animator.StringToHash("ButtonPress");
+        _rigidbody.velocity = transform.up * speed;
     }
 
     private void Update()
     {
-        _rigidbody.velocity = transform.up * speed;
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _rigidbody.MoveRotation(_rigidbody.rotation + degreesPerTurn);
+            speed /= 5f;
+            transform.up = Quaternion.Euler(0, 0, degreesPerTurn) * transform.up;
+            _rigidbody.velocity = transform.up * speed;
         }
-        
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            speed *= 5f;
+            _rigidbody.velocity = transform.up * speed;
+        }
+
         animator.SetBool(_animationHash, Input.GetKey(KeyCode.Space));  
+    }
+    
+    public void AlignWithVelocity()
+    {
+        transform.up = _rigidbody.velocity.normalized;
     }
 }
