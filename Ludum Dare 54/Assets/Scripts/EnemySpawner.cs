@@ -55,9 +55,9 @@ public class EnemySpawner : MonoBehaviour
         };
         
         var rotations = new[]{
-            Quaternion.Euler(0, 0, 180),               // top
+            Quaternion.Euler(0, 0, 180), // top
             Quaternion.Euler(0, 0, -90), // right
-            Quaternion.identity, // bottom
+            Quaternion.identity,              // bottom
             Quaternion.Euler(0, 0, 90)   // left
         };
         
