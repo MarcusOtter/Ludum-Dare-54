@@ -22,15 +22,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            speed /= 5f;
+            Time.timeScale = 0.5f;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
             transform.up = Quaternion.Euler(0, 0, degreesPerTurn) * transform.up;
             _rigidbody.velocity = transform.up * speed;
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            speed *= 5f;
-            _rigidbody.velocity = transform.up * speed;
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = 0.02f;
         }
 
         animator.SetBool(_animationHash, Input.GetKey(KeyCode.Space));  
