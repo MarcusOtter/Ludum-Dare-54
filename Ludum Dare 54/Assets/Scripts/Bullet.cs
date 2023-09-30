@@ -15,9 +15,22 @@ public class Bullet : MonoBehaviour
         _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
     }
 
-    public void TakeDamage(int damage)
+    public void ModifyHealth(int delta)
     {
-        health -= damage;
+        // Slowmo experiments
+        // if (delta > 0)
+        // {
+        //     Time.timeScale = 0.2f;
+        //     Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        //     this.FireAndForgetWithDelay(0.02f, () =>
+        //     {
+        //         // This has a problem because we can be holding and then timescale should be 0.5
+        //         Time.timeScale = 1f;
+        //         Time.fixedDeltaTime = 0.02f;
+        //     });
+        // }
+        
+        health += delta;
         if (health > 0) return;
         
         rigidbody2D.velocity = Vector2.zero;
@@ -25,6 +38,7 @@ public class Bullet : MonoBehaviour
         {
             spriteRenderer.enabled = false;
         }
+
         Destroy(gameObject, 0.2f);
     }
 }

@@ -6,13 +6,16 @@ public class Wall : MonoBehaviour
     {
         if (other.gameObject.TryGetComponent<PlayerMovement>(out var player))
         {
-            player.AlignWithVelocity();
-            return;
+            if (!player.IsSpinning)
+            {
+                player.AlignWithVelocity();
+                return;
+            }
         }
         
         if (other.gameObject.TryGetComponent<Bullet>(out var bullet))
         {
-            bullet.TakeDamage(1);
+            bullet.ModifyHealth(-1);
             return;
         }
     }

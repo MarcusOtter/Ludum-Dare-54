@@ -1,72 +1,50 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private Enemy enemyPrefab;
-    [SerializeField] private Vector2 xRange = new(-2.5f, 2.5f);
-    [SerializeField] private Vector2 yRange = new(-2.5f, 2.5f);
-    [SerializeField] private float spawnInterval = 0.25f;
+    [SerializeField] private Transform spawnPoint;
+    
+    [Header("Settings")]
+    [SerializeField] private Vector2 slideRange = new(-2.5f, 2.5f);
+    [SerializeField] private float spawnDelay = 5f;
     [SerializeField] private int enemiesPerGroup = 5;
-    [SerializeField] private float groupInterval = 5f;
-    [SerializeField] private float spawnOffset = 10f;
+    [SerializeField] private float groupGapSize = 1f;
+    [SerializeField] private float spawnDistance = 10f;
     
     private float _timeSinceLastGroupSpawn;
-    private float _timeSinceLastEnemySpawn;
-    private int _enemiesSpawnedThisGroup;
-    
-    private Vector2 _spawnPosition;
-    private Quaternion _spawnRotation;
 
     private void Awake()
     {
-        (_spawnPosition, _spawnRotation) = GetGroupSpawnPosition();
+        SpawnGroup();
     }
     
     private void Update()
     {
         _timeSinceLastGroupSpawn += Time.deltaTime;
-        _timeSinceLastEnemySpawn += Time.deltaTime;
 
-        if (_timeSinceLastGroupSpawn >= groupInterval)
+        if (_timeSinceLastGroupSpawn >= spawnDelay)
         {
             _timeSinceLastGroupSpawn = 0f;
-            _enemiesSpawnedThisGroup = 0;
-            (_spawnPosition, _spawnRotation) = GetGroupSpawnPosition();
-        }
-        
-        if (_timeSinceLastEnemySpawn >= spawnInterval && _enemiesSpawnedThisGroup < enemiesPerGroup)
-        {
-            _timeSinceLastEnemySpawn = 0f;
-            _enemiesSpawnedThisGroup++;
-            SpawnEnemy(_spawnPosition, _spawnRotation);
+            SpawnGroup();
         }
     }
 
-    private (Vector2, Quaternion) GetGroupSpawnPosition()
+    private void SpawnGroup()
     {
-        var side = Random.Range(0, 4);
-        var spawnPositionNumber = Random.Range(xRange.x, xRange.y);
+        spawnPoint.position = transform.position;
+        spawnPoint.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
         
-        var positions = new []{
-            new Vector2(spawnPositionNumber, spawnOffset),  // top
-            new Vector2(-spawnOffset, spawnPositionNumber), // right
-            new Vector2(spawnPositionNumber, -spawnOffset), // bottom
-            new Vector2(spawnOffset, spawnPositionNumber)   // left
-        };
+        spawnPoint.position += spawnPoint.up * -spawnDistance;
+        spawnPoint.position += spawnPoint.right * Random.Range(slideRange.x, slideRange.y);
         
-        var rotations = new[]{
-            Quaternion.Euler(0, 0, 180), // top
-            Quaternion.Euler(0, 0, -90), // right
-            Quaternion.identity,              // bottom
-            Quaternion.Euler(0, 0, 90)   // left
-        };
         
-        return (positions[side], rotations[side]);
-    }
-    
-    private void SpawnEnemy(Vector2 position, Quaternion rotation)
-    {
-        var enemy = Instantiate(enemyPrefab, position, rotation);
-        enemy.GetComponent<Rigidbody2D>().velocity = enemy.transform.up * enemy.Speed;
+        for(var i = 0; i < enemiesPerGroup; i++)
+        {
+            Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+            spawnPoint.position += spawnPoint.up * -groupGapSize;
+        }
     }
 }

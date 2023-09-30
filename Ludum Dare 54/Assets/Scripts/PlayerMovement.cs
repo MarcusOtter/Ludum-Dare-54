@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+    public bool IsSpinning => _playerInput.IsSpacebarPressed;
+    
     [SerializeField] private float speed = 2f;
     [SerializeField] private float turnSpeed = 1f;
 
