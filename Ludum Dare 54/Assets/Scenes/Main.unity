@@ -2914,8 +2914,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 574d961a3e5cff643ad2e8a701cf5b4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 1994538514}
-  _spaceBoolName: ButtonPress
+  animator: {fileID: 0}
 --- !u!1001 &1998914125
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3392,14 +3391,6 @@ PrefabInstance:
     - target: {fileID: 1455961590464907853, guid: e28599bc887566b4194f6bf7f1f87da7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6967288366744583397, guid: e28599bc887566b4194f6bf7f1f87da7, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8417504742509448848, guid: e28599bc887566b4194f6bf7f1f87da7, type: 3}
-      propertyPath: flashDuration
-      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

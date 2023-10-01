@@ -2,30 +2,28 @@ using UnityEngine;
 
 public class PlayerGraphics : MonoBehaviour
 {
-	[SerializeField] private Animator _animator;
-	[SerializeField] private string _spaceBoolName;
+	[SerializeField] private Animator animator;
 	
 	private PlayerInput _playerInput;
 
-	private int _spaceBoolHash;
+	private readonly int _spaceDownHash = Animator.StringToHash("SpaceKeyDown");
+	private readonly int _spaceUpHash = Animator.StringToHash("SpaceKeyUp");
 	
 	private void OnEnable()
 	{
 		_playerInput = FindAnyObjectByType<PlayerInput>();
 		_playerInput.OnSpacebarDown += HandleSpacebarDown;
 		_playerInput.OnSpacebarUp += HandleSpacebarUp;
-		
-		_spaceBoolHash = Animator.StringToHash(_spaceBoolName);
 	}
 
 	private void HandleSpacebarDown()
 	{
-		_animator.SetBool(_spaceBoolHash, true);
+		animator.SetTrigger(_spaceDownHash);
 	}
 	
 	private void HandleSpacebarUp()
 	{
-		_animator.SetBool(_spaceBoolHash, false);
+		animator.SetTrigger(_spaceUpHash);
 	}
 
 	private void OnDisable()
