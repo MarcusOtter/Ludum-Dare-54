@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 	[SerializeField] private new Collider2D collider;
 	[SerializeField] private float speed;
 	[SerializeField] private float bulletHealthReward = 0.5f;
+	[SerializeField] private SoundEffect playerHurtSound;
 	
 	private void Awake()
 	{
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour
 		
 		if (other.TryGetComponent<PlayerMovement>(out _))
 		{
+			playerHurtSound.Play();
 			OnCollisionWithPlayer?.Invoke(this);
 			Die();
 		}

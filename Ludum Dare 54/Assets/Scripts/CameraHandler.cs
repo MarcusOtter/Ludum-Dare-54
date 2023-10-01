@@ -23,6 +23,7 @@ public class CameraHandler : MonoBehaviour
     {
         Wall.OnCollisionWithBullet += HandleWallCollisionWithBullet;
         Target.OnTargetHit += HandleTargetHit;
+        Enemy.OnCollisionWithPlayer += HandleCollisionWithPlayer;
     }
 
     private void Update()
@@ -47,9 +48,17 @@ public class CameraHandler : MonoBehaviour
         transform.position += direction * strength;
     }
     
+    private void HandleCollisionWithPlayer(Enemy obj)
+    {
+        var randomDirection = Random.insideUnitCircle.normalized;
+        var direction = new Vector3(randomDirection.x, randomDirection.y, 0);
+        transform.position += direction * targetHitShakeStrength * 2;
+    }
+    
     private void OnDisable()
     {
         Wall.OnCollisionWithBullet -= HandleWallCollisionWithBullet;
         Target.OnTargetHit -= HandleTargetHit;
+        Enemy.OnCollisionWithPlayer -= HandleCollisionWithPlayer;
     }
 }

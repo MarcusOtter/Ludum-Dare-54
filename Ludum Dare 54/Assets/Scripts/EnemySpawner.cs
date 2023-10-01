@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -13,16 +12,20 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int enemiesPerGroup = 5;
     [SerializeField] private float groupGapSize = 1f;
     [SerializeField] private float spawnDistance = 10f;
+
+    private GameStateManager _gameStateManager;
     
     private float _timeSinceLastGroupSpawn;
 
     private void Awake()
     {
+        _gameStateManager = FindAnyObjectByType<GameStateManager>();
         SpawnGroup();
     }
     
     private void Update()
     {
+        if (_gameStateManager.SpacePressesRemaining <= 0) return;
         _timeSinceLastGroupSpawn += Time.deltaTime;
 
         if (_timeSinceLastGroupSpawn >= spawnDelay)

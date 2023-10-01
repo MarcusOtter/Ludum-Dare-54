@@ -5,6 +5,7 @@ public class Wall : MonoBehaviour
 {
     public static event Action<Wall, Bullet> OnCollisionWithBullet;
 
+    [SerializeField] private SoundEffect bulletHitSoundEffect;
     [SerializeField] private SpriteRenderer outlineRenderer;
     [SerializeField] private Color flashColor;
     [SerializeField] private float flashDuration = 0.1f;
@@ -31,6 +32,7 @@ public class Wall : MonoBehaviour
         {
             // Flashing was kinda eh
             //FlashColor(bullet.Color);
+            bulletHitSoundEffect.Play();
             bullet.ModifyHealth(-1);
             bullet.SetHasBounced();
             OnCollisionWithBullet?.Invoke(this, bullet);

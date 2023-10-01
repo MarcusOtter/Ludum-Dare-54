@@ -1,11 +1,16 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameStateManager : MonoBehaviour
 {
 	public event Action<int> OnPressesRemainingChanged;
 	public event Action<int> OnScoreChanged;
-	public int SpacePressesRemaining => _spacePressesRemaining;
+	
+	public int SpacePressesRemaining { get; private set; }
+
+	public UnityEvent OnGameOver;
 	
 	[Header("Space presses (health)")]
 	[SerializeField] private int startingSpacePresses = 25;
@@ -13,16 +18,20 @@ public class GameStateManager : MonoBehaviour
 	[SerializeField] private int targetDirectHitReward = 3;
 	[SerializeField] private int targetBounceHitReward = 1;
 	[SerializeField] private int damageOnEnemyCollision = 10;
+	[SerializeField] private float restartDelay = 2f;
+	[SerializeField] private GameObject spaceToRestart;
+	[SerializeField] private TextMeshProUGUI highscoreText;
 
 	private PlayerInput _playerInput;
-	
-	private int _spacePressesRemaining;
+
 	private int _score;
+	private int _highscore;
 	private float _holdTime;
 
 	private void Awake()
 	{
-		_spacePressesRemaining = startingSpacePresses;
+		_highscore = PlayerPrefs.GetInt("highscore", 0);
+		SpacePressesRemaining = startingSpacePresses;
 		OnPressesRemainingChanged?.Invoke(startingSpacePresses);
 		OnScoreChanged?.Invoke(0);
 	}
@@ -38,6 +47,19 @@ public class GameStateManager : MonoBehaviour
 
 	private void Update()
 	{
+		if (SpacePressesRemaining <= 0)
+		{
+			restartDelay -= Time.deltaTime;
+			if (restartDelay <= 0)
+			{
+				spaceToRestart.SetActive(true);
+				if (Input.GetKeyDown(KeyCode.Space))
+				{
+					SimpleSceneManager.ReloadScene();
+				}
+			}
+		}
+		
 		if (!_playerInput.IsSpacebarPressed) return;
 		
 		_holdTime += Time.deltaTime;
@@ -70,8 +92,18 @@ public class GameStateManager : MonoBehaviour
 
 	private void UpdatePressesRemaining(int delta)
 	{
-		_spacePressesRemaining += delta;
-		OnPressesRemainingChanged?.Invoke(_spacePressesRemaining);
+		SpacePressesRemaining += delta;
+		OnPressesRemainingChanged?.Invoke(SpacePressesRemaining);
+		
+		if (SpacePressesRemaining <= 0)
+		{
+			_highscore = Mathf.Max(_highscore, _score);
+			highscoreText.text = _highscore.ToString();
+			PlayerPrefs.SetInt("highscore", _highscore);
+			PlayerPrefs.Save();
+			
+			OnGameOver?.Invoke();
+		}
 	}
 	
 	private void UpdateScore(int delta)

@@ -609,6 +609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 6547979542296735403, guid: c9d809e299ed2da4aaf57e00335a324c, type: 3}
+  shootSound: {fileID: 11400000, guid: b26581cff1ff51340b0e8a1359b27bc4, type: 2}
 --- !u!114 &6101608019529922348
 MonoBehaviour:
   m_ObjectHideFlags: 0

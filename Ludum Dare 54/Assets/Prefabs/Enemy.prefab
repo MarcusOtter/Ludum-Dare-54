@@ -337,6 +337,7 @@ MonoBehaviour:
   collider: {fileID: 7503727260739180427}
   speed: 2
   bulletHealthReward: 0.5
+  playerHurtSound: {fileID: 11400000, guid: 7db00e72a2edc074d8678af20dabd6b9, type: 2}
 --- !u!50 &9162123453200730914
 Rigidbody2D:
   serializedVersion: 4

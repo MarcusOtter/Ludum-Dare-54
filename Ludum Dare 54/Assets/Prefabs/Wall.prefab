@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51dd26804960fe64ca837ea5288167ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletHitSoundEffect: {fileID: 11400000, guid: f10844fd5ac3f2543aa72f64c1c55d8b, type: 2}
   outlineRenderer: {fileID: 6182599348799646181}
   flashColor: {r: 0.32941177, g: 0.28235295, b: 0.78431374, a: 1}
   flashDuration: 0.25
@@ -171,7 +172,7 @@ SpriteRenderer:
   m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 76e9d1debb248c9478ef940b40f0ba32, type: 3}
-  m_Color: {r: 0.23137255, g: 0.21568628, b: 0.20392157, a: 1}
+  m_Color: {r: 0.32941177, g: 0.28235295, b: 0.78431374, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

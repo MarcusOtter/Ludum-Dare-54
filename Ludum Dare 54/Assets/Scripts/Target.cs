@@ -6,6 +6,8 @@ public class Target : MonoBehaviour
 	public static event Action<Target, Bullet> OnTargetHit;
 
 	[SerializeField] private Animator animator;
+	[SerializeField] private SoundEffect bounceHitSoundEffect;
+	[SerializeField] private SoundEffect directHitSoundEffect;
 	[SerializeField] private string directHitTriggerName = "DirectHit";
 	[SerializeField] private string bounceHitTriggerName = "BounceHit";
 
@@ -26,6 +28,15 @@ public class Target : MonoBehaviour
 		}
 		
 		animator.SetTrigger(bullet.HasBounced ? _bounceHitTriggerHash : _directHitTriggerHash);
+
+		if (bullet.HasBounced)
+		{
+			bounceHitSoundEffect.Play();
+		}
+		else
+		{
+			directHitSoundEffect.Play();
+		}
 		
 		bullet.LogTargetHit(this);
 		OnTargetHit?.Invoke(this, bullet);

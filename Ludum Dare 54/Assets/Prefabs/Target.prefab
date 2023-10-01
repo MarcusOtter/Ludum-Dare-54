@@ -465,6 +465,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5094264753565703446}
+  bounceHitSoundEffect: {fileID: 11400000, guid: 0f492cebd2436fa40b4b5dd58616db94, type: 2}
+  directHitSoundEffect: {fileID: 11400000, guid: 077c4509b7e0aa04b83a9286136d1bde, type: 2}
   directHitTriggerName: DirectHit
   bounceHitTriggerName: BounceHIt
 --- !u!95 &5094264753565703446

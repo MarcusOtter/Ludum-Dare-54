@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameUiManager : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI totalScoreText;
+	[SerializeField] private TextMeshProUGUI totalScoreText2;
 	[SerializeField] private TextMeshProUGUI spacePressesText;
 	[SerializeField] private ScoreText scoreTextPrefab;
 	[SerializeField] private float scoreTextStaggerDelay = 0.1f;
@@ -72,6 +73,7 @@ public class GameUiManager : MonoBehaviour
 	private void HandleScoreChanged(int totalScore)
 	{
 		totalScoreText.text = totalScore.ToString();
+		totalScoreText2.text = totalScore.ToString();
 	}
 	
 	private void OnDisable()

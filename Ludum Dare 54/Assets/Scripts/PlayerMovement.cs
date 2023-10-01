@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
     public bool IsSpinning => _playerInput.IsSpacebarPressed;
     
     [SerializeField] private float speed = 2f;
-    [SerializeField] private float turnSpeed = 1f;
+    [SerializeField] private float turnSpeed = 0.4f;
 
     private PlayerInput _playerInput;
     private Rigidbody2D _rigidbody;
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!_playerInput.IsSpacebarPressed) return;
         
-        transform.up = Quaternion.Euler(0, 0, -turnSpeed) * transform.up;
+        transform.up = Quaternion.Euler(0, 0, -turnSpeed * Time.deltaTime) * transform.up;
         _rigidbody.velocity = Vector2.zero;
     }
     

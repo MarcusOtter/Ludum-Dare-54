@@ -57,6 +57,19 @@ MonoBehaviour:
   enemyKillBaseScore: 10
   beforeBounceColor: {r: 1, g: 0.18039216, b: 0, a: 1}
   afterBounceColor: {r: 0.99607843, g: 0.65882355, b: 0.18431373, a: 1}
+  killSoundEffectBase: {fileID: 11400000, guid: 6e264228e0eb3b645aab8e74b3709f97, type: 2}
+  killSoundEffectMulti:
+  - {fileID: 11400000, guid: 195df50fed296ee43b29dc1e12d140cc, type: 2}
+  - {fileID: 11400000, guid: 93d0e285d9c27ff47af6d75aacd5103e, type: 2}
+  - {fileID: 11400000, guid: f7cb191bd5d95de4089eabd80964cb71, type: 2}
+  - {fileID: 11400000, guid: 14d2915bbceb29d44a69f9c100c6b3b6, type: 2}
+  - {fileID: 11400000, guid: 0e0c13da5c674584ba574997c42b5d11, type: 2}
+  - {fileID: 11400000, guid: ce676bb3fa9bb59478cb4a6feeb7b310, type: 2}
+  - {fileID: 11400000, guid: ec82f2d910522cb4fbd1aa9b24ac30de, type: 2}
+  - {fileID: 11400000, guid: 8f76f55f991873642a5acec9e728ca5a, type: 2}
+  - {fileID: 11400000, guid: 39ed0512681891b4884d62a2db23b252, type: 2}
+  - {fileID: 11400000, guid: 83906032a0d68c142b81a9f48e3ccc32, type: 2}
+  - {fileID: 11400000, guid: e5925563ffa3b09449a7e490a73785c0, type: 2}
 --- !u!50 &157141058727248334
 Rigidbody2D:
   serializedVersion: 4

@@ -18,6 +18,9 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int enemyKillBaseScore = 10;
     [SerializeField] private Color beforeBounceColor;
     [SerializeField] private Color afterBounceColor;
+    [SerializeField] private SoundEffect killSoundEffectBase;
+    [SerializeField] private SoundEffect[] killSoundEffectMulti;
+    [SerializeField] private float pitchPerKill = 0.1f;
 
     private GameUiManager _gameUiManager;
     private SpriteRenderer[] _spriteRenderers;
@@ -45,6 +48,13 @@ public class Bullet : MonoBehaviour
     public void LogKill(Enemy _)
     {
         _kills++;
+        // killSoundEffectBase.Play();
+        // var multi = killSoundEffectMulti[Mathf.Min(_kills - 1, killSoundEffectMulti.Length - 1)];
+        var newAudioSource = new GameObject("KillSoundEffect").AddComponent<AudioSource>();
+        newAudioSource.pitch = 1 + _kills * pitchPerKill;
+        
+        newAudioSource.PlayOneShot(killSoundEffectBase.Clips[0], killSoundEffectBase.MinVolume);
+        
         AddScore();
     }
 

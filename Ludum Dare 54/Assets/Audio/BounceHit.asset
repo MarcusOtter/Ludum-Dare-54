@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e0941f22d93bc745afd3a77f598d36b, type: 3}
+  m_Name: BounceHit
+  m_EditorClassIdentifier: 
+  Clips:
+  - {fileID: 8300000, guid: d51b737ab73f3e64db6304f8af1e1054, type: 3}
+  MinVolume: 0.4
+  MaxVolume: 0.4
+  MinPitch: 1
+  MaxPitch: 1
+  Loop: 0
+  IsAffectedByTimeScale: 1
