@@ -14,6 +14,7 @@ public class Target : MonoBehaviour
 		
 		// TODO: Play some cool effect?
 		bullet.ModifyHealth(-9999999);
+		bullet.LogTargetHit(this);
 		OnTargetHit?.Invoke(this, bullet);
 	}
 }

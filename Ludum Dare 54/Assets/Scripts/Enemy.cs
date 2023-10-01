@@ -4,6 +4,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 	public static event Action<Enemy> OnCollisionWithPlayer;
+	public static event Action<Enemy, Bullet> OnCollisionWithBullet;
 	
 	[SerializeField] private new Rigidbody2D rigidbody;
 	[SerializeField] private new Collider2D collider;
@@ -25,6 +26,8 @@ public class Enemy : MonoBehaviour
 		if (other.TryGetComponent<Bullet>(out var bullet))
 		{
 			bullet.ModifyHealth(bulletHealthReward);
+			bullet.LogKill(this);
+			OnCollisionWithBullet?.Invoke(this, bullet);
 			Die();
 		}
 		

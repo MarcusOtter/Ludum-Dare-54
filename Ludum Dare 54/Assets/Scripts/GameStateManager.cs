@@ -4,23 +4,27 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour
 {
 	public event Action<int> OnPressesRemainingChanged;
+	public event Action<int> OnScoreChanged;
 	public int SpacePressesRemaining => _spacePressesRemaining;
 	
+	[Header("Space presses (health)")]
 	[SerializeField] private int startingSpacePresses = 25;
 	[SerializeField] private float holdTimePerPress = 0.5f;
 	[SerializeField] private int targetDirectHitReward = 3;
 	[SerializeField] private int targetBounceHitReward = 1;
 	[SerializeField] private int damageOnEnemyCollision = 10;
-	
+
 	private PlayerInput _playerInput;
 	
 	private int _spacePressesRemaining;
+	private int _score;
 	private float _holdTime;
 
 	private void Awake()
 	{
 		_spacePressesRemaining = startingSpacePresses;
 		OnPressesRemainingChanged?.Invoke(startingSpacePresses);
+		OnScoreChanged?.Invoke(0);
 	}
 
 	private void OnEnable()
@@ -29,6 +33,7 @@ public class GameStateManager : MonoBehaviour
 		_playerInput.OnSpacebarDown += HandleSpacebarDown;
 		Target.OnTargetHit += HandleTargetHit;
 		Enemy.OnCollisionWithPlayer += HandleEnemyCollisionWithPlayer;
+		Bullet.OnBulletDestroyed += HandleBulletDestroyed;
 	}
 
 	private void Update()
@@ -57,11 +62,22 @@ public class GameStateManager : MonoBehaviour
 	{
 		UpdatePressesRemaining(-damageOnEnemyCollision);
 	}
+	
+	private void HandleBulletDestroyed(Bullet bullet, Target _)
+	{
+		UpdateScore(bullet.Score);
+	}
 
 	private void UpdatePressesRemaining(int delta)
 	{
 		_spacePressesRemaining += delta;
 		OnPressesRemainingChanged?.Invoke(_spacePressesRemaining);
+	}
+	
+	private void UpdateScore(int delta)
+	{
+		_score += delta;
+		OnScoreChanged?.Invoke(_score);
 	}
 
 	private void OnDisable()
@@ -69,5 +85,6 @@ public class GameStateManager : MonoBehaviour
 		_playerInput.OnSpacebarDown -= HandleSpacebarDown;
 		Target.OnTargetHit -= HandleTargetHit;
 		Enemy.OnCollisionWithPlayer -= HandleEnemyCollisionWithPlayer;
+		Bullet.OnBulletDestroyed -= HandleBulletDestroyed;
 	}
 }

@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 157141058727248334}
+  scoreTextPrefab: {fileID: 8470645147553370891, guid: bc9b1744dacd20f4db90c9c6cb642242, type: 3}
   speed: 30
   health: 3
 --- !u!50 &157141058727248334
