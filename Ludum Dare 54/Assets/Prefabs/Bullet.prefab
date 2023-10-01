@@ -48,10 +48,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f0f0cfa3114554488864c662d49eb5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bounceTargetHitScoreMultiplier: 2
+  directTargetHitScoreMultiplier: 25
+  collider: {fileID: 1363262081685461809}
   rigidbody2D: {fileID: 157141058727248334}
-  scoreTextPrefab: {fileID: 8470645147553370891, guid: bc9b1744dacd20f4db90c9c6cb642242, type: 3}
   speed: 30
   health: 3
+  enemyKillBaseScore: 10
+  beforeBounceColor: {r: 1, g: 0.18039216, b: 0, a: 1}
+  afterBounceColor: {r: 0.99607843, g: 0.65882355, b: 0.18431373, a: 1}
 --- !u!50 &157141058727248334
 Rigidbody2D:
   serializedVersion: 4
@@ -118,8 +123,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2127242545
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Time: 0.4
   m_PreviewTimeScale: 1
@@ -152,8 +157,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.75686276, b: 0, a: 1}
-      key1: {r: 1, g: 0.75686276, b: 0, a: 1}
+      key0: {r: 1, g: 1, b: 1, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -177,7 +182,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 1
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -312,7 +317,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 76e9d1debb248c9478ef940b40f0ba32, type: 3}
-  m_Color: {r: 1, g: 0.75860286, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

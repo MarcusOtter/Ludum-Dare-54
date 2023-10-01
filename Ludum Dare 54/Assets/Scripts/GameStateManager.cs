@@ -33,7 +33,7 @@ public class GameStateManager : MonoBehaviour
 		_playerInput.OnSpacebarDown += HandleSpacebarDown;
 		Target.OnTargetHit += HandleTargetHit;
 		Enemy.OnCollisionWithPlayer += HandleEnemyCollisionWithPlayer;
-		Bullet.OnBulletDestroyed += HandleBulletDestroyed;
+		ScoreText.OnScoreAnimationFinished += HandleScoreAnimationFinished;
 	}
 
 	private void Update()
@@ -62,10 +62,10 @@ public class GameStateManager : MonoBehaviour
 	{
 		UpdatePressesRemaining(-damageOnEnemyCollision);
 	}
-	
-	private void HandleBulletDestroyed(Bullet bullet, Target _)
+
+	private void HandleScoreAnimationFinished(int scoreDelta)
 	{
-		UpdateScore(bullet.Score);
+		UpdateScore(scoreDelta);
 	}
 
 	private void UpdatePressesRemaining(int delta)
@@ -85,6 +85,6 @@ public class GameStateManager : MonoBehaviour
 		_playerInput.OnSpacebarDown -= HandleSpacebarDown;
 		Target.OnTargetHit -= HandleTargetHit;
 		Enemy.OnCollisionWithPlayer -= HandleEnemyCollisionWithPlayer;
-		Bullet.OnBulletDestroyed -= HandleBulletDestroyed;
+		ScoreText.OnScoreAnimationFinished -= HandleScoreAnimationFinished;
 	}
 }

@@ -5,33 +5,41 @@ public class Bullet : MonoBehaviour
 {
     public static event Action<Bullet, Target> OnBulletDestroyed;
 
-    public int Score { get; private set; }
-
     public bool HasBounced { get; private set; }
+    public Color Color => HasBounced ? afterBounceColor : beforeBounceColor;
 
     public int bounceTargetHitScoreMultiplier = 2;
     public int directTargetHitScoreMultiplier = 10;
     
+    [SerializeField] private new Collider2D collider;
     [SerializeField] private new Rigidbody2D rigidbody2D;
     [SerializeField] private float speed = 30f;
     [SerializeField] private float health = 2;
     [SerializeField] private int enemyKillBaseScore = 10;
+    [SerializeField] private Color beforeBounceColor;
+    [SerializeField] private Color afterBounceColor;
 
     private GameUiManager _gameUiManager;
     private SpriteRenderer[] _spriteRenderers;
-    
+    private TrailRenderer _trailRenderer;
+
     private int _kills;
+    private bool _hitTarget;
 
     private void Awake()
     {
         rigidbody2D.velocity = transform.up * speed;
         _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         _gameUiManager = FindAnyObjectByType<GameUiManager>();
+        _trailRenderer = GetComponentInChildren<TrailRenderer>();
+        SetColor(beforeBounceColor);
     }
 
     public void SetHasBounced()
     {
+        if (_hitTarget) return; // Color is locked in after hitting target
         HasBounced = true;
+        SetColor(afterBounceColor);
     }
 
     public void LogKill(Enemy _)
@@ -42,7 +50,9 @@ public class Bullet : MonoBehaviour
 
     public void LogTargetHit(Target target)
     {
-        Score *= HasBounced ? bounceTargetHitScoreMultiplier : directTargetHitScoreMultiplier;
+        _hitTarget = true;
+        HideBullet();
+        Destroy(gameObject, 3f);
         OnBulletDestroyed?.Invoke(this, target);
     }
     
@@ -64,20 +74,43 @@ public class Bullet : MonoBehaviour
         health += delta;
         if (health > 0) return;
         
+        HideBullet();
+        Destroy(gameObject, 3f);
+        OnBulletDestroyed?.Invoke(this, null);
+    }
+
+    private void HideBullet()
+    {
         rigidbody2D.velocity = Vector2.zero;
+        collider.enabled = false;
+        
         foreach (var spriteRenderer in _spriteRenderers)
         {
             spriteRenderer.enabled = false;
         }
+        
+        if (_trailRenderer)
+        {
+            _trailRenderer.material.color = Color.clear;
+        }
+    }
+    
+    private void SetColor(Color color)
+    {
+        foreach(var spriteRenderer in _spriteRenderers)
+        {
+            spriteRenderer.color = color;
+        }
 
-        OnBulletDestroyed?.Invoke(this, null);
-        Destroy(gameObject, 0.2f);
+        if (_trailRenderer)
+        {
+            _trailRenderer.material.color = color;
+        }
     }
     
     private void AddScore()
     {
         var scoreDelta = enemyKillBaseScore * _kills;
-        Score += scoreDelta;
         _gameUiManager.SpawnScoreText(this, scoreDelta);
     }
 }

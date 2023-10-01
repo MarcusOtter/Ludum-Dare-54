@@ -7,10 +7,11 @@ public class GameUiManager : MonoBehaviour
 {
 	[SerializeField] private TextMeshProUGUI totalScoreText;
 	[SerializeField] private TextMeshProUGUI spacePressesText;
-	[SerializeField] private TMP_Text scoreTextPrefab;
+	[SerializeField] private ScoreText scoreTextPrefab;
+	[SerializeField] private float scoreTextStaggerDelay = 0.1f;
 
 	private GameStateManager _gameStateManager;
-	private Dictionary<int, List<TMP_Text>> _scoreTexts = new();
+	private readonly Dictionary<int, List<ScoreText>> _scoreTexts = new();
 
 	private void OnEnable()
 	{
@@ -23,12 +24,11 @@ public class GameUiManager : MonoBehaviour
 	public void SpawnScoreText(Bullet bullet, int score)
 	{
 		var text = Instantiate(scoreTextPrefab, bullet.transform.position, Quaternion.identity);
-		text.text = $"+{score}";
+		text.SetScore(score);
 
-		
 		if (!_scoreTexts.ContainsKey(bullet.GetInstanceID()))
 		{
-			_scoreTexts.Add(bullet.GetInstanceID(), new List<TMP_Text>());
+			_scoreTexts.Add(bullet.GetInstanceID(), new List<ScoreText>());
 		}
 		
 		_scoreTexts[bullet.GetInstanceID()].Add(text);
@@ -52,21 +52,13 @@ public class GameUiManager : MonoBehaviour
 	private void HandleBulletDestroyed(Bullet bullet, [CanBeNull] Target target)
 	{
 		if (!_scoreTexts.TryGetValue(bullet.GetInstanceID(), out var texts)) return;
-
-		if (target != null)
+		
+		for (var i = 0; i < texts.Count; i++)
 		{
-			foreach (var scoreText in texts)
-			{
-				// TODO: Some animation
-				var score = int.Parse(scoreText.text);
-				var newScore = score * (bullet.HasBounced
-					? bullet.bounceTargetHitScoreMultiplier
-					: bullet.directTargetHitScoreMultiplier);
-				scoreText.text = $"+{newScore}";
-			}
+			texts[i].TriggerBulletDeath(bullet, target, scoreTextStaggerDelay * i);
 		}
 
-		this.FireAndForgetWithDelay(0.5f, () =>
+		this.FireAndForgetWithDelay(texts.Count * scoreTextStaggerDelay + 2, () =>
 		{
 			DeleteTextsForBullet(bullet);
 		});

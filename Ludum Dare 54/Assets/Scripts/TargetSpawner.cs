@@ -43,11 +43,12 @@ public class TargetSpawner : MonoBehaviour
 
 	private void HandleTargetHit(Target hitTarget, Bullet _)
 	{
+		if (!_inactiveSpawnPoints.ContainsKey(hitTarget.GetHashCode())) return;
 		var spawnPoint = _inactiveSpawnPoints[hitTarget.GetHashCode()];
 		_activeSpawnPoints.Add(spawnPoint);
 		_inactiveSpawnPoints.Remove(hitTarget.GetHashCode());
 		_activeTargets--;
-		Destroy(hitTarget.gameObject);
+		Destroy(hitTarget.gameObject, 10f);
 	}
 	
 	private void SpawnTarget()
