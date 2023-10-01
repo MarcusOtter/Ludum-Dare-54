@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody2D: {fileID: 157141058727248334}
-  speed: 40
+  speed: 30
   health: 3
 --- !u!50 &157141058727248334
 Rigidbody2D:
@@ -153,19 +153,19 @@ TrailRenderer:
       serializedVersion: 2
       key0: {r: 1, g: 0.75686276, b: 0, a: 1}
       key1: {r: 1, g: 0.75686276, b: 0, a: 1}
-      key2: {r: 0.6901961, g: 0.18981783, b: 0.14509803, a: 0}
-      key3: {r: 0.8113208, g: 0.35041407, b: 0.11863652, a: 0}
-      key4: {r: 0.11372549, g: 0.09411765, b: 0.52156866, a: 0}
-      key5: {r: 0.11372549, g: 0.09411765, b: 0.52156866, a: 0}
-      key6: {r: 0.11372549, g: 0.09411765, b: 0.52156866, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 26214
-      ctime3: 39321
-      ctime4: 65535
-      ctime5: 65535
-      ctime6: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
       ctime7: 0
       atime0: 0
       atime1: 65535
@@ -176,7 +176,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 1
-      m_ColorSpace: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

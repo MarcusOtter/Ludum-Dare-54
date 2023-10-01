@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleSpacebarDown()
     {
-        Time.timeScale = 0.5f;
+        Time.timeScale = 0.3f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
 

@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public bool HasBounced { get; private set; }
+    
     [SerializeField] private new Rigidbody2D rigidbody2D;
     [SerializeField] private float speed;
 
-    [SerializeField] private int health = 2;
+    [SerializeField] private float health = 2;
 
     private SpriteRenderer[] _spriteRenderers;
     
@@ -15,7 +17,12 @@ public class Bullet : MonoBehaviour
         _spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
     }
 
-    public void ModifyHealth(int delta)
+    public void SetHasBounced()
+    {
+        HasBounced = true;
+    }
+    
+    public void ModifyHealth(float delta)
     {
         // Slowmo experiments
         // if (delta > 0)
